@@ -10,15 +10,17 @@ in vec2 a;void main(){gl_Position=vec4(a,0,1);}`;
   const fs = `#version 300 es
 precision highp float;
 uniform vec4 C[${MAX}];uniform int N;uniform vec2 S;uniform float P,T,K;out vec4 o;
+${o.prelude || ''}
 float smin(float a,float b,float k){float h=max(k-abs(a-b),0.)/k;return min(a,b)-h*h*k*.25;}
 float hash(vec2 q){return fract(sin(dot(q,vec2(12.9898,78.233)))*43758.5453);}
 float vnoise(vec2 q){vec2 i=floor(q),f=fract(q);f=f*f*(3.-2.*f);
   return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+1.),f.x),f.y);}
-void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;
-  float d=1e5,d1=1e5,d2=1e5,r1=1.,s1=0.;vec2 c1=vec2(-1e4);
-  for(int i=0;i<${MAX};i++){if(i>=N)break;vec4 c=C[i];float di=length(p-c.xy)-c.z;d=smin(d,di,K);di+=(1.-smoothstep(5.,14.,c.z))*60.;
+void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;vec2 pr=p;${o.snap ? `p=(floor(p/${o.snap}.)+.5)*${o.snap}.;` : ''}
+  float d=1e5,d1=1e5,d2=1e5,r1=1.,s1=0.,ws=1e-4,ss=0.;vec2 c1=vec2(-1e4);
+  for(int i=0;i<${MAX};i++){if(i>=N)break;vec4 c=C[i];float di=length(p-c.xy)-c.z;d=smin(d,di,K);float wv=exp(-max(di,0.)/22.)*smoothstep(2.,10.,c.z);ws+=wv;ss+=wv*c.w;di+=(1.-smoothstep(5.,14.,c.z))*60.;
     if(di<d1){d2=d1;d1=di;r1=c.z;s1=c.w;c1=c.xy;}else if(di<d2)d2=di;}
   float g=hash(gl_FragCoord.xy+fract(T)*0.);vec2 q=p/S-.5;
+  float sa=ss/ws;
   vec3 col;
   ${o.style}
   o=vec4(col,1);}`;

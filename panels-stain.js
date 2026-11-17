@@ -4,13 +4,13 @@ const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mail = 'barrsr' + '@' + 'icloud.com';
 const css = `
 .sheet{position:fixed;inset:0 0 0 auto;margin:0;width:min(880px,100vw);height:100svh;max-height:none;max-width:none;padding:0;border:0;
-  background:rgba(248,241,239,.86);-webkit-backdrop-filter:blur(22px) saturate(1.1);backdrop-filter:blur(22px) saturate(1.1);color:var(--ink);
+  background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(22px) saturate(1.1);backdrop-filter:blur(22px) saturate(1.1);color:var(--ink);
   overflow:auto;overscroll-behavior:contain;user-select:text;-webkit-user-select:text;box-shadow:-30px 0 80px rgba(42,22,51,.10);
   transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s,overlay .7s allow-discrete,display .7s allow-discrete}
 .sheet:not([open]){transform:translateX(40px);opacity:0}
 @starting-style{.sheet[open]{transform:translateX(40px);opacity:0}}
 .sheet::backdrop{background:rgba(42,22,51,0);transition:background .6s,overlay .6s allow-discrete,display .6s allow-discrete}
-.sheet[open]::backdrop{background:rgba(42,22,51,.08)}
+.sheet[open]::backdrop{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 @starting-style{.sheet[open]::backdrop{background:rgba(42,22,51,0)}}
 .sheet .in{padding:clamp(28px,5vw,72px) clamp(24px,5vw,72px) 80px}
 .sheet header{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:clamp(28px,5vh,56px)}
@@ -21,7 +21,7 @@ const css = `
 .sheet a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:3px}
 .sheet a:hover{color:var(--accent)}
 .cellmark{position:relative;display:inline-block;width:20px;height:20px;flex:none;margin-top:.35em}
-.cellmark::before,.cellmark::after{content:"";position:absolute;inset:2px;border-radius:50%;background:#e490b6;box-shadow:inset 0 0 0 5px #e490b6,inset 0 0 0 9px #4a2a6e;transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+.cellmark::before,.cellmark::after{content:"";position:absolute;inset:2px;border-radius:50%;background:var(--tint);box-shadow:inset 0 0 0 5px var(--tint),inset 0 0 0 9px var(--tint2);transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
 .item:hover .cellmark::before{transform:translate(-5px,0) scale(.72)}.item:hover .cellmark::after{transform:translate(5px,0) scale(.72)}
 .items{list-style:none;margin:0;padding:0;display:grid;gap:clamp(26px,4vh,40px)}
 .item{display:grid;grid-template-columns:20px 1fr;gap:18px}
@@ -31,7 +31,7 @@ const css = `
 .item .s{margin-top:8px;color:var(--soft);font-size:.95rem}
 .stories .item h3{font-size:clamp(1.2rem,1.8vw,1.5rem)}
 .stories .item h3 a{text-decoration:none}.stories .item h3 a:hover{text-decoration:underline;text-decoration-color:var(--accent)}
-.yr{margin:clamp(30px,5vh,48px) 0 18px;font:750 clamp(2rem,4vw,3rem)/1 "Times New Roman",Times,"Tinos",serif;letter-spacing:-.03em;color:#e490b6}
+.yr{margin:clamp(30px,5vh,48px) 0 18px;font:750 clamp(2rem,4vw,3rem)/1 "Times New Roman",Times,"Tinos",serif;letter-spacing:-.03em;color:var(--tint)}
 .yr:first-of-type{margin-top:0}
 .honors{margin-top:56px}
 .now .when{font:600 1rem/1 "Times New Roman",Times,"Tinos",serif;color:var(--accent)}
@@ -39,7 +39,7 @@ const css = `
 .big{display:inline-block;font:700 clamp(1.8rem,4.6vw,3.4rem)/1.1 "Times New Roman",Times,"Tinos",serif;letter-spacing:-.03em;text-decoration:none!important;word-break:break-word}
 .copy{margin-left:14px;background:none;border:0;font:600 1rem/1 "Times New Roman",Times,"Tinos",serif;color:var(--accent);cursor:pointer;vertical-align:middle}
 .paperlist{margin:0;padding:0 0 0 1.4em;display:grid;gap:16px;font-size:1.06rem;line-height:1.55}
-.paperlist li::marker{color:#e490b6;font-weight:700}
+.paperlist li::marker{color:var(--tint);font-weight:700}
 .paperlist .au{font-weight:700}
 .paperlist .pos{color:var(--soft);font-style:italic}.paperlist .pos::before{content:"("}.paperlist .pos::after{content:")"}
 .dl{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:22px}
