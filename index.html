@@ -75,5 +75,5 @@ addEventListener('click',e=>{if(e.target.closest('a,button,dialog'))return;colon
 setup();measureZones();addEventListener('resize',()=>{setup();measureZones()});document.fonts.ready.then(measureZones);document.fonts.load('700 100px Tinos').then(buildMask);document.fonts.ready.then(buildMask);
 let last=0;function loop(t){if(!still&&t-last>90){step();last=t}draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
 </script>
-<script src="panels.js?v=61"></script>
+<script src="panels.js?v=62"></script>
 </body></html>

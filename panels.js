@@ -142,7 +142,7 @@ S.research = sheet('research', 'Research', 'Click a well to load it.', `
 S.papers = sheet('papers', 'Papers', '', `${papers.map(([g, list]) => `<div class="grp">${g}</div><ol class="paperlist">${list.map(x => `<li>${x}</li>`).join('')}</ol>`).join('')}
   <p style="margin-top:40px;color:#615c55">Citations and the full record are on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
 S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" style="margin:0" href="files/ryan-barrs-resume.pdf?v=2" download>One-page resume</a><span class="meta">PDF</span></div>
-  <div class="dl"><a class="big" style="margin:0" href="files/ryan-barrs-cv.pdf?v=2" download>Full CV</a><span class="meta">PDF</span></div>
+  <div class="dl"><a class="big" style="margin:0" href="files/ryan-barrs-cv.pdf?v=3" download>Full CV</a><span class="meta">PDF</span></div>
   <object class="preview" data="files/ryan-barrs-resume.pdf?v=2#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
 S.writing = sheet('writing', 'Writing', 'Research stories I wrote for the Medical University of South Carolina newsroom.', `
   <div class="slides">${writing.map(w=>`<a class="slide" href="${w[3]}" target="_blank" rel="noopener"><span class="frost">${w[0]}<small>${w[1]}</small></span><span class="title">${w[2]}</span></a>`).join('')}</div>`);
