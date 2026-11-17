@@ -59,6 +59,8 @@ const research = [
   ['2023', 'More repair from fewer cells', 'Heart-cell transplants are limited by how many cells it takes to see a benefit. Nanowired human heart organoids restored more function to infarcted hearts at a 20-fold lower cell dose than comparable studies.', 'Co-first author, <a href="https://pubmed.ncbi.nlm.nih.gov/37540743/" target="_blank" rel="noopener">Science Advances</a>'],
   ['2021', 'Defined chemistry for printed blood vessels', 'Bioinks built from natural materials vary from batch to batch, which makes printed tissue hard to reproduce. I developed one with fully defined chemistry that printed microvascular networks at over 90% fidelity and viability.', 'First author, <a href="https://pubmed.ncbi.nlm.nih.gov/33332959/" target="_blank" rel="noopener">Biomacromolecules</a>'],
 ];
+const rcat = {'A fair test inside one specimen':'Eye drug and gene delivery','Seeing force':'Eye drug and gene delivery','More repair from fewer cells':'Heart repair','Scaling a cell-free therapy':'Heart repair','Defined chemistry for printed blood vessels':'Engineering tissue','Catching AI at the microscope':'Evaluating AI in biology'};
+const rorder = ['Eye drug and gene delivery','Heart repair','Engineering tissue','Evaluating AI in biology'];
 const writing = [
   ['MUSC News', '2021', 'A matter of trust: Reengaging communities of color in clinical trials', 'https://web.musc.edu/about/news-center/2021/08/10/diversifying-clinical-trials'],
   ['EurekAlert!', '2019', 'A new epigenetic brain defense against recurrence of opioid use', 'https://www.eurekalert.org/news-releases/980910'],
@@ -85,15 +87,14 @@ function sheet(id, title, sub, body) {
   document.body.appendChild(d); return d;
 }
 const S = {};
-S.research = sheet('research', 'Research', '', `<ul class="items">${research.map(r => item(r[0], r[1], r[2], r[3])).join('')}</ul>
+S.research = sheet('research', 'Research', '', `${rorder.map(c => `<div class="yr">${c}</div><ul class="items">${research.filter(r => rcat[r[1]] === c).map(r => item(r[0], r[1], r[2], r[3])).join('')}</ul>`).join('')}
   <p class="s" style="margin-top:44px;color:var(--soft)">Every paper is on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
 S.papers = sheet('papers', 'Papers', '', `${papers.map(([g, list]) => `<div class="yr">${g}</div><ol class="paperlist">${list.map(x => `<li>${x}</li>`).join('')}</ol>`).join('')}
   <p class="s" style="margin-top:44px;color:var(--soft)">Citations and the full record are on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
 S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" href="files/ryan-barrs-resume.pdf" download>One-page resume</a><span class="meta">PDF</span></div>
   <div class="dl"><a class="big" href="files/ryan-barrs-cv.pdf" download>Full CV</a><span class="meta">PDF</span></div>
   <object class="preview" data="files/ryan-barrs-resume.pdf#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
-S.writing = sheet('writing', 'Writing', 'Four years of research news at the Medical University of South Carolina.', `<ul class="items stories">${writing.map(w => item(`${w[0]}, ${w[1]}`, `<a href="${w[3]}" target="_blank" rel="noopener">${w[2]}</a>`)).join('')}</ul>
-  <p class="s" style="margin-top:44px;color:var(--soft)">More at <a href="https://www.clippings.me/ryanbarrs" target="_blank" rel="noopener">clippings.me/ryanbarrs</a>.</p>`);
+S.writing = sheet('writing', 'Writing', 'Four years of research news at the Medical University of South Carolina.', `<ul class="items stories">${writing.map(w => item(`${w[0]}, ${w[1]}`, `<a href="${w[3]}" target="_blank" rel="noopener">${w[2]}</a>`)).join('')}</ul>`);
 S.talks = sheet('talks', 'Talks', '', `${talks.map(([y, list]) => `<div class="yr">${y}</div><ul class="items">${list.map(t => item(t[0], t[1], t[2])).join('')}</ul>`).join('')}
   <div class="yr honors">Honors</div><ul class="items">
     ${item('2024', 'NIH T32 Postdoctoral Fellowship, NIDCR', 'Renewed for a second year.')}
@@ -108,7 +109,7 @@ S.now = sheet('now', 'Now', '', `<div class="now"><span class="when">In Miami</s
     ${item('Teaching', 'Hands-on surgical training', 'Including a live demonstration at Retina World Congress 2026.')}
     ${item('Always', 'Writing about science', 'For people outside the lab.')}</ul></div>`);
 S.contact = sheet('contact', 'Contact', '', `<a class="big" href="mailto:${mail}">${mail}</a><button class="copy" type="button" id="copy">Copy</button>
-  <div class="links"><a href="https://www.linkedin.com/in/ryanbarrs" target="_blank" rel="noopener">LinkedIn</a><a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a><a href="https://github.com/barrsr" target="_blank" rel="noopener">GitHub</a><a href="https://www.clippings.me/ryanbarrs" target="_blank" rel="noopener">Writing portfolio</a></div>`);
+  <div class="links"><a href="https://www.linkedin.com/in/ryanbarrs" target="_blank" rel="noopener">LinkedIn</a><a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a><a href="https://github.com/barrsr" target="_blank" rel="noopener">GitHub</a></div>`);
 
 const clock = document.getElementById('clock');
 const tick = () => { clock.textContent = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', timeZone: 'America/New_York' }); };
