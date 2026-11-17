@@ -50,8 +50,13 @@ function setup(){dpr=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;
   for(let k=0;k<7;k++)colony(Math.random()*cols|0,Math.random()*rows|0,6);buildMask()}
 let mask=null,tx=null;
 function textSpec(){const h=document.querySelector('h1'),r=h.getBoundingClientRect(),fs=parseFloat(getComputedStyle(h).fontSize);return{r,fs}}
-function buildMask(){const {r,fs}=textSpec();tx=document.createElement('canvas');tx.width=W;tx.height=H;const o=tx.getContext('2d');o.fillStyle='#000';o.font=`900 ${fs}px Archivo`;o.textBaseline='alphabetic';
-  o.fillText('Ryan',r.left,r.top+fs*.74);o.fillText('Barrs',r.left,r.top+fs*1.54);mask=new Uint8Array(cols*rows);const d=o.getImageData(0,0,W,H).data;
+function buildMask(){const h=document.querySelector('h1');tx=document.createElement('canvas');tx.width=W;tx.height=H;const o=tx.getContext('2d');o.fillStyle='#000';o.textBaseline='alphabetic';
+  const fs=parseFloat(getComputedStyle(h).fontSize);o.font=`900 ${fs}px Archivo`;try{o.fontStretch='ultra-condensed'}catch(e){}
+  const nodes=[...h.childNodes].filter(n=>n.nodeType===3&&n.textContent.trim());
+  nodes.forEach(n=>{const rg=document.createRange();rg.selectNodeContents(n);const r=rg.getBoundingClientRect(),t=n.textContent.trim(),m=o.measureText(t);
+    const pr=document.createElement('span');pr.style.cssText='display:inline-block;width:0;height:0;vertical-align:baseline';n.after(pr);const base=pr.getBoundingClientRect().bottom;pr.remove();
+    o.save();o.translate(r.left,base);o.scale(r.width/m.width,1);o.fillText(t,0,0);o.restore()});
+  mask=new Uint8Array(cols*rows);const d=o.getImageData(0,0,W,H).data;
   for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const px=Math.min(W-1,x*S+S/2|0),py=Math.min(H-1,y*S+S/2|0);mask[y*cols+x]=d[(py*W+px)*4+3]>128?1:0}}
 const idx=(x,y)=>((y+rows)%rows)*cols+((x+cols)%cols);
 function colony(cx,cy,r){for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++)if(x*x+y*y<=r*r&&Math.random()<.42)grid[idx(cx+x,cy+y)]=1}
@@ -67,7 +72,7 @@ function draw(){ctx.fillStyle='#efeee9';ctx.fillRect(0,0,W,H);
   if(pop<cols*rows*.012&&gen%40===0)colony(Math.random()*cols|0,Math.random()*rows|0,5)}
 addEventListener('pointermove',e=>{const x=e.clientX/S|0,y=e.clientY/S|0;for(let k=0;k<3;k++)grid[idx(x+((Math.random()*3)|0)-1,y+((Math.random()*3)|0)-1)]=1},{passive:true});
 addEventListener('click',e=>{if(e.target.closest('a,button,dialog'))return;colony(e.clientX/S|0,e.clientY/S|0,5)});
-setup();addEventListener('resize',setup);
+setup();addEventListener('resize',setup);document.fonts.load('900 100px Archivo').then(buildMask);document.fonts.ready.then(buildMask);
 let last=0;function loop(t){if(!still&&t-last>90){step();last=t}draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
 </script>
 <script src="panels.js"></script>
