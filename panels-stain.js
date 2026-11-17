@@ -94,7 +94,7 @@ S.papers = sheet('papers', 'Papers', '', `${papers.map(([g, list]) => `<div clas
 S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" href="files/ryan-barrs-resume.pdf" download>One-page resume</a><span class="meta">PDF</span></div>
   <div class="dl"><a class="big" href="files/ryan-barrs-cv.pdf" download>Full CV</a><span class="meta">PDF</span></div>
   <object class="preview" data="files/ryan-barrs-resume.pdf#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
-S.writing = sheet('writing', 'Writing', 'Four years of research news at the Medical University of South Carolina.', `<ul class="items stories">${writing.map(w => item(`${w[0]}, ${w[1]}`, `<a href="${w[3]}" target="_blank" rel="noopener">${w[2]}</a>`)).join('')}</ul>`);
+S.writing = sheet('writing', 'Writing', 'Research stories I wrote for the Medical University of South Carolina newsroom.', `<ul class="items stories">${writing.map(w => item(`${w[0]}, ${w[1]}`, `<a href="${w[3]}" target="_blank" rel="noopener">${w[2]}</a>`)).join('')}</ul>`);
 S.talks = sheet('talks', 'Talks', '', `${talks.map(([y, list]) => `<div class="yr">${y}</div><ul class="items">${list.map(t => item(t[0], t[1], t[2])).join('')}</ul>`).join('')}
   <div class="yr honors">Honors</div><ul class="items">
     ${item('2024', 'NIH T32 Postdoctoral Fellowship, NIDCR', 'Renewed for a second year.')}
