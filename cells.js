@@ -16,7 +16,7 @@ float vnoise(vec2 q){vec2 i=floor(q),f=fract(q);f=f*f*(3.-2.*f);
   return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+1.),f.x),f.y);}
 void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;
   float d=1e5,d1=1e5,d2=1e5,r1=1.,s1=0.;vec2 c1=vec2(-1e4);
-  for(int i=0;i<${MAX};i++){if(i>=N)break;vec4 c=C[i];float di=length(p-c.xy)-c.z;d=smin(d,di,K);
+  for(int i=0;i<${MAX};i++){if(i>=N)break;vec4 c=C[i];float di=length(p-c.xy)-c.z;d=smin(d,di,K);di+=(1.-smoothstep(5.,14.,c.z))*60.;
     if(di<d1){d2=d1;d1=di;r1=c.z;s1=c.w;c1=c.xy;}else if(di<d2)d2=di;}
   float g=hash(gl_FragCoord.xy+fract(T)*0.);vec2 q=p/S-.5;
   vec3 col;
@@ -64,7 +64,7 @@ void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;
     const n = cells.length;
     for (let i = n - 1; i >= 0; i--) {
       const c = cells[i];
-      if (c.dying) { c.r -= dt * 10; if (c.r < 1) { cells.splice(i, 1); continue; } }
+      if (c.dying) { c.r -= dt * (c.r > 14 ? 10 : 40); if (c.r < 1) { cells.splice(i, 1); continue; } }
       else if (c.r < c.rmax) c.r = Math.min(c.rmax, c.r + c.g * dt);
       else if (cells.length < MAX && Math.random() < dt * .6) divide(c);
     }
