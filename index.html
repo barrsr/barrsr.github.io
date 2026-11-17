@@ -53,7 +53,7 @@ Cells({prelude:PRE,avoid:'h1,.lede,.aside,nav',canvas:document.getElementById('c
   vec3 bg=BGC()-(g-.5)*.015;
   float edge=d2-d1;
   float cell=smoothstep(4.,-4.,d1-r1*.35)*smoothstep(5.,14.,r1);float seam=1.-smoothstep(.8,2.2,edge);float m=cell;
-  vec3 c=pal(s1);c=mix(c,ACC(),step(fract(s1*13.7),.045));
+  vec3 c=pal(s1);
   c*=.96+.07*smoothstep(0.,r1,-d1);
   col=mix(bg,mix(c,mix(c,bg,.45),seam),m);`});
 </script>
