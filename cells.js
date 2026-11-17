@@ -71,7 +71,7 @@ void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;vec2 pr=p;${o.sna
       else if (cells.length < MAX && Math.random() < dt * .6) divide(c);
     }
     if (cells.length > MAX * .85 && Math.random() < dt * .5) { const c = cells[Math.random() * cells.length | 0]; if (c) c.dying = true; }
-    if (cells.length < MAX * .35) cells.push(make(rnd(0, W), rnd(0, H), 2));
+    if (cells.length < MAX * .35) { const x = rnd(0, W), y = rnd(0, H); if (!zones.some(z => x > z[0] - 80 && x < z[2] + 80 && y > z[1] - 80 && y < z[3] + 80)) cells.push(make(x, y, 2)); }
     const m = cells.length;
     for (let i = 0; i < m; i++) { const a = cells[i];
       for (let j = i + 1; j < m; j++) { const c = cells[j], dx = c.x - a.x, dy = c.y - a.y, d2 = dx * dx + dy * dy, mn = (a.r + c.r) * OVER;
