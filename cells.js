@@ -52,7 +52,7 @@ void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;
     else { const c = make(x, y, 0); c.r = c.rmax * .8; cells.push(c); shove(x, y, c.r * 3.2, 160); }
   });
 
-  const clear = () => { for (let i = cells.length - 1; i >= 0; i--) { const c = cells[i]; if (zones.some(z => c.x > z[0] - c.r - 14 && c.x < z[2] + c.r + 14 && c.y > z[1] - c.r - 14 && c.y < z[3] + c.r + 14)) cells.splice(i, 1); } };
+  const clear = () => { for (let i = cells.length - 1; i >= 0; i--) { const c = cells[i]; if (zones.some(z => c.x > z[0] - c.r * 1.2 - 34 && c.x < z[2] + c.r * 1.2 + 34 && c.y > z[1] - c.r * 1.2 - 34 && c.y < z[3] + c.r * 1.2 + 34)) cells.splice(i, 1); } };
   clear(); document.fonts && document.fonts.ready.then(() => { measure(); clear(); });
   const STIFF = o.stiff || 7, DAMP = o.damp || 3.2, OVER = o.overlap || .92, JIT = o.jitter || 18;
   function divide(c) {
@@ -76,7 +76,7 @@ void main(){vec2 p=vec2(gl_FragCoord.x,S.y*P-gl_FragCoord.y)/P;
         if (d2 < mn * mn && d2 > 1e-6) { const d = Math.sqrt(d2), f = (mn - d) * STIFF * dt / d; a.vx -= dx * f; a.vy -= dy * f; c.vx += dx * f; c.vy += dy * f; } }
       const px = a.x - mx, py = a.y - my, pd = Math.hypot(px, py), PR = 150;
       if (pd < PR && pd > 1) { const f = (PR - pd) / PR * 260 * dt / pd; a.vx += px * f; a.vy += py * f; }
-      for (const z of zones) { const m = a.r + 14, l = z[0] - m, t = z[1] - m, rr = z[2] + m, bb = z[3] + m;
+      for (const z of zones) { const m = a.r * 1.2 + 34, l = z[0] - m, t = z[1] - m, rr = z[2] + m, bb = z[3] + m;
         if (a.x > l && a.x < rr && a.y > t && a.y < bb) { const dl = a.x - l, dr = rr - a.x, dt2 = a.y - t, db = bb - a.y, mn = Math.min(dl, dr, dt2, db), F = 900 * dt;
           if (mn === dl) a.vx -= F; else if (mn === dr) a.vx += F; else if (mn === dt2) a.vy -= F; else a.vy += F;
         } }
