@@ -52,7 +52,7 @@ const PRE=`vec3 pal(float t){t=fract(t);vec3 a=${T[0]},b=${T[1]},c=${T[2]},e=${T
 Cells({prelude:PRE,avoid:'h1,.lede,.aside,nav',canvas:document.getElementById('c'),max:170,r:[22,46],k:10,overlap:0.84,style:`
   vec3 bg=BGC()-(g-.5)*.015;
   float edge=d2-d1;
-  float m=smoothstep(3.,5.,edge)*smoothstep(4.,-4.,d1-r1*.35);
+  float m=smoothstep(3.,5.,edge)*smoothstep(4.,-4.,d1-r1*.35)*smoothstep(5.,14.,r1);
   vec3 c=pal(s1);
   c*=.96+.07*smoothstep(0.,r1,-d1);
   col=mix(bg,c,m);`});
