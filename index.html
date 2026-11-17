@@ -39,8 +39,8 @@ h1 .phd{font:italic 700 .3em/1 "Times New Roman",Times,"Tinos",serif;letter-spac
     <p class="aside">Front porch state of mind.</p>
   </div>
 </main>
-<script src="cells.js?v=18"></script>
-<script src="panels-stain.js?v=18"></script>
+<script src="cells.js?v=19"></script>
+<script src="panels-stain.js?v=19"></script>
 <script>
 const PALS={"pink": {"bg": "#f8f1ef", "ink": "#2a1633", "soft": "#7d6680", "acc": "#d9739f", "tiles": ["#f5b3cc", "#dc8cbd", "#bd9edb", "#f9cbb8"]}, "midcentury": {"bg": "#f4eee1", "ink": "#262420", "soft": "#6e6658", "acc": "#cf6a32", "tiles": ["#e3aa35", "#2f7f7a", "#cf6a32", "#8d9a5b"]}, "ocean": {"bg": "#f1f4f3", "ink": "#13263a", "soft": "#5b6b78", "acc": "#2c7d9b", "tiles": ["#a8d1d6", "#4f8fa8", "#cfe0d6", "#245a78"]}, "ink": {"bg": "#f3f2ee", "ink": "#111111", "soft": "#66625b", "acc": "#d8361e", "tiles": ["#2a2a28", "#5a5955", "#9a978f", "#cfccc4"]}, "miami": {"bg": "#fbf6f1", "ink": "#1d2b3a", "soft": "#6b7280", "acc": "#f0725f", "tiles": ["#ff9a85", "#ffc970", "#62c8c1", "#b9e4c9"]}};
 const PK=(new URLSearchParams(location.search).get('p')||'ink'), PAL=PALS[PK]||PALS.ink;
@@ -52,9 +52,9 @@ const PRE=`vec3 pal(float t){t=fract(t);vec3 a=${T[0]},b=${T[1]},c=${T[2]},e=${T
 Cells({prelude:PRE,avoid:'h1,.lede,.aside,nav',canvas:document.getElementById('c'),max:170,r:[22,46],k:10,overlap:0.84,style:`
   vec3 bg=BGC()-(g-.5)*.015;
   float edge=d2-d1;
-  float m=smoothstep(3.,5.,edge)*smoothstep(4.,-4.,d1-r1*.35)*smoothstep(5.,14.,r1);
+  float cell=smoothstep(4.,-4.,d1-r1*.35)*smoothstep(5.,14.,r1);float seam=1.-smoothstep(.8,2.2,edge);float m=cell;
   vec3 c=pal(s1);
   c*=.96+.07*smoothstep(0.,r1,-d1);
-  col=mix(bg,c,m);`});
+  col=mix(bg,mix(c,mix(c,bg,.45),seam),m);`});
 </script>
 </body></html>
