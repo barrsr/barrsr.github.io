@@ -4,84 +4,90 @@
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mail = 'barrsr' + '@' + 'icloud.com';
 const css = `
-.sheet{position:fixed;inset:0 0 0 auto;margin:0;width:min(1000px,100vw);height:100svh;max-height:none;max-width:none;padding:0;border:0;border-left:6px solid #000;
-  background:#efeee9;color:#000;overflow:auto;overscroll-behavior:contain;font:400 1.08rem/1.5 "Newsreader",Georgia,serif;user-select:text;-webkit-user-select:text;
-  transition:transform .5s cubic-bezier(.2,.9,.2,1),overlay .5s allow-discrete,display .5s allow-discrete}
+.sheet{position:fixed;inset:0 0 0 auto;margin:0;width:min(1000px,100vw);height:100svh;max-height:none;max-width:none;padding:0;border:0;
+  background:#f4f2ed;color:#111;overflow:auto;overscroll-behavior:contain;font:400 1.1rem/1.55 "Times New Roman",Times,"Tinos",serif;user-select:text;-webkit-user-select:text;box-shadow:-40px 0 90px rgba(0,0,0,.14);
+  transition:transform .6s cubic-bezier(.16,1,.3,1),overlay .6s allow-discrete,display .6s allow-discrete}
 .sheet:not([open]){transform:translateX(104%)}
 @starting-style{.sheet[open]{transform:translateX(104%)}}
-.sheet::backdrop{background:rgba(0,0,0,.35);transition:opacity .5s,overlay .5s allow-discrete,display .5s allow-discrete}
+.sheet::backdrop{background:rgba(0,0,0,.18);transition:opacity .5s,overlay .5s allow-discrete,display .5s allow-discrete}
 .sheet:not([open])::backdrop{opacity:0}
 @starting-style{.sheet[open]::backdrop{opacity:0}}
-.sheet .in{padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px) 70px}
-.sheet header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;border-bottom:4px solid #000;padding-bottom:14px;margin-bottom:28px}
-.sheet h2{margin:0;font:900 clamp(3rem,7vw,5.4rem)/.86 "Archivo",sans-serif;font-stretch:70%;outline:none}
-.sheet .sub{margin:8px 0 0;font:500 1rem/1.3 "Archivo",sans-serif;font-stretch:90%}
-.sheet .x{font:900 1rem/1 "Archivo",sans-serif;background:#000;color:#efeee9;border:0;padding:12px 14px 10px;cursor:pointer;box-shadow:5px 5px 0 #e1250f}
-.sheet .x:hover{background:#e1250f;color:#000}
-.sheet a{color:#000;text-decoration:none;border-bottom:3px solid #e1250f}
-.sheet a:hover{background:#e1250f;color:#000}
-.sheet :focus-visible{outline:3px solid #e1250f;outline-offset:3px}
-/* well plate */
-.plate{display:inline-grid;grid-template-columns:28px repeat(3,minmax(64px,96px));gap:12px;padding:20px 22px;border:3px solid #000;border-radius:18px;background:#fff;box-shadow:8px 8px 0 #000}
-.plate .lab{font:900 .95rem/1 "Archivo",sans-serif;display:flex;align-items:center;justify-content:center}
-.well{aspect-ratio:1;border-radius:50%;border:3px solid #000;background:radial-gradient(circle at 35% 30%,#fff,#e4e2db 70%);cursor:pointer;position:relative;padding:0}
-.well::after{content:"";position:absolute;inset:18%;border-radius:50%;background:#e1250f;transform:scale(0);transition:transform .45s cubic-bezier(.2,1.5,.4,1)}
+.sheet .in{padding:clamp(28px,4.5vw,64px) clamp(22px,4.5vw,64px) 80px}
+.sheet header{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-bottom:clamp(26px,4vh,44px)}
+.sheet h2{margin:0;font:700 clamp(3rem,7vw,5.4rem)/.9 "Times New Roman",Times,"Tinos",serif;letter-spacing:-.025em;outline:none}
+.sheet .sub{margin:10px 0 0;font-style:italic;color:#615c55}
+.sheet .x{all:unset;cursor:pointer;font:700 1.05rem/1 "Times New Roman",Times,"Tinos",serif;color:#615c55;padding:6px 0}
+.sheet .x:hover,.sheet .x:focus-visible{color:#d8361e}
+.sheet a{color:#111;text-decoration:underline;text-decoration-color:#d8361e;text-decoration-thickness:2px;text-underline-offset:3px}
+.sheet a:hover{color:#d8361e}
+.sheet :focus-visible{outline:2px solid #d8361e;outline-offset:3px}
+/* well plate: the plate is a soft tray, the wells are glass */
+.plate{display:inline-grid;grid-template-columns:24px repeat(3,minmax(64px,96px));gap:14px;padding:22px 24px;border-radius:22px;background:linear-gradient(160deg,#fbfaf7,#e9e6df)}
+.plate .lab{font:700 1rem/1 "Times New Roman",Times,"Tinos",serif;color:#615c55;display:flex;align-items:center;justify-content:center}
+.well{aspect-ratio:1;border-radius:50%;border:0;background:radial-gradient(circle at 36% 30%,#fff 0,#f1efe9 38%,#d9d5cc 72%,#c9c4ba 100%);box-shadow:inset 0 3px 8px rgba(0,0,0,.18),0 1px 0 #fff;cursor:pointer;position:relative;padding:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.well:hover{transform:scale(1.05)}
+.well::after{content:"";position:absolute;inset:20%;border-radius:50%;background:radial-gradient(circle at 38% 32%,#f0634c,#d8361e 55%,#a8240f);transform:scale(0);transition:transform .5s cubic-bezier(.2,1.5,.4,1)}
 .well[aria-pressed=true]::after{transform:scale(1)}
-.well:hover{background:radial-gradient(circle at 35% 30%,#fff,#d6d3ca 70%)}
-.readout{margin-top:26px;border:3px solid #000;padding:18px 20px;background:#fff;box-shadow:8px 8px 0 #000;min-height:150px}
-.readout .k{font:900 .95rem/1 "Archivo",sans-serif;color:#e1250f}
-.readout h3{margin:6px 0 6px;font:900 1.7rem/1.05 "Archivo",sans-serif;font-stretch:80%}
-.readout p{margin:0;max-width:64ch}
-.split{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
-.pubs{list-style:none;margin:34px 0 0;padding:0;border-top:3px solid #000}
-.pubs li{padding:11px 0;border-bottom:1px solid #000;font-size:.98rem}
-/* slide box */
-.slides{display:grid;grid-template-columns:1fr;gap:12px}
-.slide{display:grid;grid-template-columns:150px 1fr;align-items:stretch;min-height:62px;border:3px solid #000;background:rgba(255,255,255,.55);text-decoration:none;border-bottom:3px solid #000!important;
-  transition:transform .3s cubic-bezier(.2,.9,.2,1),box-shadow .3s;color:#000}
-.slide .frost{background:repeating-linear-gradient(45deg,#d9d7cf 0 3px,#e8e6df 3px 6px);border-right:3px solid #000;padding:10px 12px;font:900 .9rem/1.15 "Archivo",sans-serif}
-.slide .frost small{display:block;font-weight:500;margin-top:4px}
-.slide .title{padding:12px 16px;font:500 1.15rem/1.3 "Newsreader",serif;display:flex;align-items:center}
-.slide:hover,.slide:focus-visible{transform:translateX(-22px);box-shadow:22px 0 0 #e1250f;background:#fff!important;color:#000!important}
+.readout{min-height:160px}
+.readout .k{font:italic 400 1rem/1.3 "Times New Roman",Times,"Tinos",serif;color:#d8361e}
+.readout h3{margin:6px 0 8px;font:700 1.9rem/1.08 "Times New Roman",Times,"Tinos",serif;letter-spacing:-.01em}
+.readout p{margin:0;max-width:62ch}
+.split{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:start}
+.pubs{list-style:none;margin:40px 0 0;padding:0}
+.pubs li{padding:12px 0;border-top:1px solid #d9d5cc;font-size:1rem}
+/* slide box: frosted labels, no frames */
+.slides{display:grid;gap:10px}
+.slide{display:grid;grid-template-columns:150px 1fr;align-items:center;min-height:64px;text-decoration:none!important;color:#111;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.5);transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s}
+.slide .frost{align-self:stretch;display:flex;flex-direction:column;justify-content:center;background:repeating-linear-gradient(45deg,#dedbd3 0 3px,#ebe8e1 3px 6px);padding:10px 14px;font:700 .95rem/1.15 "Times New Roman",Times,"Tinos",serif}
+.slide .frost small{display:block;font-weight:400;font-style:italic;margin-top:3px}
+.slide .title{padding:12px 18px;font:400 1.15rem/1.3 "Times New Roman",Times,"Tinos",serif}
+.slide:hover,.slide:focus-visible{transform:translateX(-14px);background:#fff;color:#111}
+.slide:hover .title{color:#d8361e}
 /* gel */
-.gel{position:relative;border:3px solid #000;background:#111;height:420px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:16px 18px;box-shadow:8px 8px 0 #000}
-.lane{position:relative;border-top:10px solid #333}
-.lane .yr{position:absolute;top:-42px;left:0;right:0;text-align:center;font:900 1rem/1 "Archivo",sans-serif;color:#000}
-.band{position:absolute;left:8%;right:8%;height:12px;background:#f2f2f2;border-radius:2px;box-shadow:0 0 14px rgba(255,255,255,.6);cursor:pointer;top:0;transition:top 1.6s cubic-bezier(.2,.8,.2,1),background .2s}
-.band:hover,.band.on{background:#e1250f;box-shadow:0 0 16px rgba(225,37,15,.9)}
-.gelwrap{margin-top:52px}
-.gelread{margin-top:22px;border:3px solid #000;background:#fff;padding:16px 18px;box-shadow:8px 8px 0 #000;min-height:96px}
-.honors{list-style:none;margin:30px 0 0;padding:0;border-top:3px solid #000}
-.honors li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #000}
-.honors b{font:900 1.05rem/1.4 "Archivo",sans-serif;color:#e1250f}
-/* notebook */
-.page{border:3px solid #000;background:#fff;box-shadow:8px 8px 0 #000;padding:26px 28px 30px;
-  background-image:linear-gradient(#d9e3ec 1px,transparent 1px),linear-gradient(90deg,#d9e3ec 1px,transparent 1px);background-size:22px 22px;position:relative}
-.page .stamp{display:inline-block;border:3px solid #e1250f;color:#e1250f;font:900 .95rem/1 "Archivo",sans-serif;padding:8px 10px 6px;transform:rotate(-3deg);background:#fff}
-.page .clock{float:right;font:900 1.4rem/1 "Archivo",sans-serif;font-variant-numeric:tabular-nums}
-.page h3{margin:22px 0 4px;font:900 2rem/1 "Archivo",sans-serif;font-stretch:80%}
-.page .where{margin:0 0 14px;font-style:italic}
+.gel{position:relative;border-radius:14px;background:linear-gradient(#1b1a19,#0f0e0e);height:420px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:18px 20px}
+.lane{position:relative;border-top:9px solid #2d2b29;border-radius:2px}
+.lane .yr{position:absolute;top:-44px;left:0;right:0;text-align:center;font:700 1.05rem/1 "Times New Roman",Times,"Tinos",serif;color:#111}
+.band{position:absolute;left:9%;right:9%;height:11px;background:#f3f1ec;border-radius:3px;box-shadow:0 0 14px rgba(255,255,255,.55);cursor:pointer;top:0;transition:top 1.6s cubic-bezier(.2,.8,.2,1),background .2s}
+.band:hover,.band.on{background:#e8462c;box-shadow:0 0 18px rgba(232,70,44,.9)}
+.gelwrap{margin-top:54px}
+.gelread{margin-top:22px;min-height:80px}
+.honors{list-style:none;margin:34px 0 0;padding:0}
+.honors li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:10px 0;border-top:1px solid #d9d5cc}
+.honors b{font:700 1.05rem/1.45 "Times New Roman",Times,"Tinos",serif;color:#d8361e}
+/* notebook: ruled page */
+.page{position:relative;border-radius:6px;padding:28px 30px 32px;background:#fdfcf9 linear-gradient(transparent 31px,#dfe6ec 31px) 0 6px/100% 32px;box-shadow:0 18px 50px rgba(0,0,0,.08)}
+.page .stamp{display:inline-block;color:#d8361e;font:italic 700 1.05rem/1 "Times New Roman",Times,"Tinos",serif;transform:rotate(-3deg)}
+.page .clock{float:right;font:700 1.4rem/1 "Times New Roman",Times,"Tinos",serif;font-variant-numeric:tabular-nums}
+.page h3{margin:22px 0 2px;font:700 2rem/1 "Times New Roman",Times,"Tinos",serif}
+.page .where{margin:0 0 12px;font-style:italic;color:#615c55}
 .page ul{margin:0;padding:0;list-style:none}
-.page li{padding:9px 0 9px 30px;position:relative;max-width:66ch}
-.page li::before{content:"";position:absolute;left:4px;top:15px;width:12px;height:12px;border:2px solid #000;background:#fff}
-.page li.done::before{background:#000}
+.page li{padding:4px 0 4px 26px;position:relative;max-width:66ch;line-height:32px}
+.page li::before{content:"";position:absolute;left:4px;top:13px;width:9px;height:9px;border-radius:50%;background:#111}
+.page li.open::before{background:transparent;box-shadow:inset 0 0 0 1.5px #111}
 /* terminal */
-.term{border:3px solid #000;background:#fff;box-shadow:8px 8px 0 #000;font:400 1rem/1.55 "JetBrains Mono",ui-monospace,monospace}
-.term .log{padding:16px 18px;min-height:220px;max-height:46vh;overflow:auto}
+.term{border-radius:12px;background:#151413;color:#efece6;font:400 1.05rem/1.55 "Times New Roman",Times,"Tinos",serif;overflow:hidden}
+.term .log{padding:18px 20px;min-height:200px;max-height:42vh;overflow:auto}
 .term .log p{margin:0 0 4px}
-.term .log .in{font-weight:800}.term .log .in::before{content:"ryan@miami ~ % ";font-weight:400}
-.term .log mark{background:#ffef5c}
-.term form{display:flex;border-top:3px solid #000}
-.term label{padding:10px 12px;border-right:3px solid #000;white-space:nowrap}
-.term input{flex:1;font:800 1rem/1 "JetBrains Mono",monospace;border:0;padding:10px 12px;outline:none;background:transparent;min-width:0}
-.big{display:inline-block;margin:26px 0 0;font:900 clamp(1.6rem,4vw,3rem)/1 "Archivo",sans-serif;font-stretch:80%;border-bottom:6px solid #e1250f!important}
-.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.links a{font:900 1.2rem/1 "Archivo",sans-serif;font-stretch:85%;border:3px solid #000!important;padding:12px 14px 10px;box-shadow:5px 5px 0 #000}
-@media (max-width:720px){.split{grid-template-columns:1fr}.slide{grid-template-columns:110px 1fr}.gel{height:340px}}
-@media (prefers-reduced-motion:reduce){.sheet,.sheet::backdrop,.band,.slide,.well::after{transition:none}}
+.term .log .in{font-weight:700}.term .log .in::before{content:"ryan@miami ~ % ";font-weight:400;color:#9c968c}
+.term .log mark{background:none;color:#ff6a4f;font-weight:700}
+.term form{display:flex;background:#1f1d1c}
+.term label{padding:12px 14px;white-space:nowrap;color:#9c968c}
+.term input{flex:1;font:700 1.05rem/1 "Times New Roman",Times,"Tinos",serif;color:#fff;border:0;padding:12px 14px;outline:none;background:transparent;min-width:0}
+.big{display:inline-block;margin:28px 0 0;font:700 clamp(1.7rem,4.2vw,3.1rem)/1.1 "Times New Roman",Times,"Tinos",serif;text-decoration:none!important;background:linear-gradient(#d8361e,#d8361e) 0 100%/0 3px no-repeat;transition:background-size .5s cubic-bezier(.16,1,.3,1)}
+.big:hover{background-size:100% 3px}
+.links{display:flex;flex-wrap:wrap;gap:26px;margin-top:24px}
+.links a{font:700 1.2rem/1 "Times New Roman",Times,"Tinos",serif}
+.paperlist{margin:0;padding:0 0 0 1.5em;display:grid;gap:14px;line-height:1.55}
+.paperlist li::marker{color:#d8361e;font-weight:700}
+.paperlist .au{font-weight:700}.paperlist .pos{font-style:italic;color:#615c55}.paperlist .pos::before{content:"("}.paperlist .pos::after{content:")"}
+.grp{margin:34px 0 14px;font:700 1.1rem/1 "Times New Roman",Times,"Tinos",serif;color:#d8361e}.grp:first-child{margin-top:0}
+.dl{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.dl .meta{color:#615c55;font-style:italic}
+.preview{display:block;width:100%;height:min(1100px,130vw);margin-top:26px;border:0;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.12);background:#fff}
+@media (max-width:720px){.split{grid-template-columns:1fr}.slide{grid-template-columns:110px 1fr}.gel{height:340px}.preview{display:none}}
+@media (prefers-reduced-motion:reduce){.sheet,.sheet::backdrop,.band,.slide,.well::after,.well{transition:none}}
 `;
 const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
-if (!document.querySelector('link[href*="JetBrains"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap'; document.head.appendChild(l); }
 
 const research = [
   {w:'A1', y:'2026', t:'A fair test inside one specimen', d:'Testing a therapy on human tissue usually means comparing different donors, and donors vary widely. On a platform engineered from human donor tissue, I showed that each specimen\'s two eyes behave alike, so the comparison can happen inside a single specimen, where the only difference is the treatment.', s:'First author, Frontiers in Ophthalmology'},
@@ -91,6 +97,7 @@ const research = [
   {w:'B2', y:'2021', t:'Defined chemistry for printed blood vessels', d:'Bioinks built from natural materials vary from batch to batch, which makes printed tissue hard to reproduce. I developed one with fully defined chemistry that printed microvascular networks at over 90% fidelity and viability.', s:'First author, <a href="https://pubmed.ncbi.nlm.nih.gov/33332959/" target="_blank" rel="noopener">Biomacromolecules</a>'},
   {w:'B3', y:'2026', t:'Catching AI at the microscope', d:'AI models are starting to read biology images, and it\'s hard to tell when they\'re confidently wrong. I built microscopy tasks with biology traps from public heart-cell data and ran them as agents on Claude and GPT.', s:'<a href="https://github.com/barrsr/cardiac-microscopy-evals" target="_blank" rel="noopener">Code on GitHub</a>'},
 ];
+const rcat = {A1:'Eye drug and gene delivery',A2:'Eye drug and gene delivery',A3:'Heart repair',B1:'Heart repair',B2:'Engineering tissue',B3:'Evaluating AI in biology'};
 const writing = [
   ['MUSC News','2021','A matter of trust: Reengaging communities of color in clinical trials','https://web.musc.edu/about/news-center/2021/08/10/diversifying-clinical-trials'],
   ['EurekAlert!','2019','A new epigenetic brain defense against recurrence of opioid use','https://www.eurekalert.org/news-releases/980910'],
@@ -109,6 +116,7 @@ const talks = {
   '2026': [['Poster','ASRS Annual Meeting, Montréal','Real-time force feedback training for subretinal gene therapy.'],['Poster','ARVO Annual Meeting, Denver','A platform for standardized assessment of suprachoroidal drug delivery.']],
 };
 
+const papers = [["Accepted and under review", ["<span class=\"au\">Barrs RW</span>, Kadmiel M, Ehrensing EA, Barak Y, Mahajan VB, Arhontoulis DC, Almeida DRP. Biological characterization and bilateral intraocular concordance of near real surgical specimens. A human ex vivo platform for controlled intraocular research. <em>Frontiers in Ophthalmology</em> 2026;6:1917720. Accepted September 28, 2026. <span class=\"pos\">first author</span>", "Arhontoulis DC, <span class=\"au\">Barrs RW</span>, Kadmiel M, Singer M, Mahajan VB, Almeida DRP. Needle dead space and penetration depth in anterior chamber paracentesis. A three-configuration bench comparison on near-real surgical specimens. <em>Clinical Ophthalmology</em>, under review."]], ["Peer-reviewed", ["Tan Y*, Coyle RC*, <span class=\"au\">Barrs RW</span>*, Silver SE, Li M, Richards DJ, et al. Nanowired human cardiac organoid transplantation enables highly efficient and effective recovery of infarcted hearts. <em>Science Advances</em> 2023;9(31):eadf2898. PMID 37540743. <span class=\"pos\">co-first author &middot; top 1% field-weighted citation impact</span>", "<span class=\"au\">Barrs RW</span>, Jia J, Ward M, Richards DJ, Yao H, Yost MJ, Mei Y. Engineering a chemically defined hydrogel bioink for direct bioprinting of microvasculature. <em>Biomacromolecules</em> 2021;22(2):275&ndash;288. PMID 33332959. <span class=\"pos\">first author</span>", "<span class=\"au\">Barrs RW</span>, Jia J, Silver SE, Yost M, Mei Y. Biomaterials for bioprinting microvasculature. <em>Chemical Reviews</em> 2020;120(19):10887&ndash;10949. PMID 32867470. <span class=\"pos\">first author</span>", "Bain JD, <span class=\"au\">Barrs RW</span>, Mei Y. Progress and challenges in transplantation of human pluripotent stem cell derived cardiomyocytes for cardiac therapy. <em>npj Biomedical Innovations</em> 2026;3(1):2. PMID 41522237.", "Coyle RC, <span class=\"au\">Barrs RW</span>, Richards DJ, Ladd EP, Menick DR, Mei Y. Targeting HIF-alpha for robust prevascularization of human cardiac organoids. <em>Journal of Tissue Engineering and Regenerative Medicine</em> 2021;15(2):189&ndash;202. PMID 33868541.", "Silver SE, <span class=\"au\">Barrs RW</span>, Mei Y. Transplantation of human pluripotent stem cell-derived cardiomyocytes for cardiac regenerative therapy. <em>Frontiers in Cardiovascular Medicine</em> 2021;8:707890. PMID 34820426.", "Jia J, Jeon EJ, Li M, Richards DJ, Lee S, Jung Y, <span class=\"au\">Barrs RW</span>, et al. Evolutionarily conserved sequence motif analysis guides development of chemically defined hydrogels for therapeutic vascularization. <em>Science Advances</em> 2020;6(28):eaaz5894. PMID 32923589.", "Schroeder LW, Buckley JR, Stroud RE, Martin RH, Nadeau EK, <span class=\"au\">Barrs RW</span>, Graham EM. Plasma neutrophil gelatinase-associated lipocalin is associated with acute kidney injury and clinical outcomes in neonates undergoing cardiopulmonary bypass. <em>Pediatric Critical Care Medicine</em> 2019;20(10):957&ndash;962. PMID 31206501.", "Akerman AW, Stroud RE, <span class=\"au\">Barrs RW</span>, et al. Elevated wall tension initiates interleukin-6 expression and abdominal aortic dilation. <em>Annals of Vascular Surgery</em> 2018;46:193&ndash;204. PMID 29107003.", "Jia J, Coyle RC, Richards DJ, Berry CL, <span class=\"au\">Barrs RW</span>, et al. Development of peptide-functionalized synthetic hydrogel microarrays for stem cell and tissue engineering applications. <em>Acta Biomaterialia</em> 2016;45:110&ndash;120. PMID 27612960."]], ["Preprints", ["Silver SE, Howells AR, Arhontoulis DC, Randolph LN, Hyams NA, <span class=\"au\">Barrs RW</span>, et al. Hypoimmunogenic hPSC-derived cardiac organoids for immune evasion and heart repair. <em>bioRxiv</em> 2025. doi:10.1101/2025.04.09.648007. PMID 40291708.", "Maddumala M, Sambuchino J, Arhontoulis D, <span class=\"au\">Barrs R</span>, Pereira D, Marcantonio G, Almeida DRP. aVOLTA, a bounded autonomous operating layer for operational communication in an investigator-led clinical research group. System design study. <em>JMIR Preprints</em> 2026. doi:10.2196/preprints.113028."]]];
 function sheet(id, title, sub, body) {
   const d = document.createElement('dialog'); d.className = 'sheet'; d.id = id; d.setAttribute('aria-labelledby', 'h-' + id);
   d.innerHTML = `<div class="in"><header><div><h2 id="h-${id}" tabindex="-1" autofocus>${title}</h2>${sub ? `<p class="sub">${sub}</p>` : ''}</div><button class="x" type="button">Close</button></header>${body}</div>`;
@@ -131,6 +139,11 @@ S.research = sheet('research', 'Research', 'Click a well to load it.', `
     <li>Barrs RW, et al. Biomaterials for bioprinting microvasculature. <i>Chemical Reviews</i> 2020. <a href="https://pubmed.ncbi.nlm.nih.gov/32867470/" target="_blank" rel="noopener">PubMed</a></li>
     <li>All papers on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</li>
   </ul>`);
+S.papers = sheet('papers', 'Papers', '', `${papers.map(([g, list]) => `<div class="grp">${g}</div><ol class="paperlist">${list.map(x => `<li>${x}</li>`).join('')}</ol>`).join('')}
+  <p style="margin-top:40px;color:#615c55">Citations and the full record are on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
+S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" style="margin:0" href="files/ryan-barrs-resume.pdf?v=2" download>One-page resume</a><span class="meta">PDF</span></div>
+  <div class="dl"><a class="big" style="margin:0" href="files/ryan-barrs-cv.pdf?v=2" download>Full CV</a><span class="meta">PDF</span></div>
+  <object class="preview" data="files/ryan-barrs-resume.pdf?v=2#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
 S.writing = sheet('writing', 'Writing', 'Research stories I wrote for the Medical University of South Carolina newsroom.', `
   <div class="slides">${writing.map(w=>`<a class="slide" href="${w[3]}" target="_blank" rel="noopener"><span class="frost">${w[0]}<small>${w[1]}</small></span><span class="title">${w[2]}</span></a>`).join('')}</div>`);
 S.talks = sheet('talks', 'Talks', 'Each band is a talk. Hover to read it.', `
@@ -150,7 +163,7 @@ S.now = sheet('now', 'Now', '', `
       <li class="done">Built the laboratory's quality system and wrote its master SOP.</li>
       <li class="done">Wrote the operating procedures and primary safety endpoint for a multisite international clinical trial, then co-led its investigator training.</li>
       <li class="done">Run hands-on surgical training, including a live demonstration at Retina World Congress 2026.</li>
-      <li>Writing about science for people outside the lab.</li>
+      <li class="open">Explaining science so anyone can understand it.</li>
     </ul></div>`);
 S.contact = sheet('contact', 'Contact', 'Type a command, or just email me.', `
   <div class="term"><div class="log" id="tlog"><p>Type <mark>help</mark> to look around.</p></div>
@@ -161,13 +174,13 @@ S.contact = sheet('contact', 'Contact', 'Type a command, or just email me.', `
 // well plate
 const readout = document.getElementById('readout');
 const showWell = i => { const r = research[i]; document.querySelectorAll('.well').forEach(w => w.setAttribute('aria-pressed', w.dataset.i == i));
-  readout.innerHTML = `<span class="k">Well ${r.w}, ${r.y}</span><h3>${r.t}</h3><p>${r.d}</p><p style="margin-top:8px;font-style:italic">${r.s}</p>`; };
+  readout.innerHTML = `<span class="k">${rcat[r.w]} &middot; well ${r.w}, ${r.y}</span><h3>${r.t}</h3><p>${r.d}</p><p style="margin-top:8px;font-style:italic">${r.s}</p>`; };
 document.querySelectorAll('.well').forEach(w => w.addEventListener('click', () => showWell(+w.dataset.i)));
 showWell(0);
 // gel: bands migrate when the panel opens
 const gelread = document.getElementById('gelread');
 const bands = [...document.querySelectorAll('.band')];
-const readBand = b => { const t = talks[b.dataset.y][+b.dataset.i]; bands.forEach(x => x.classList.toggle('on', x === b)); gelread.innerHTML = `<b style="font:900 1rem 'Archivo',sans-serif;color:#e1250f">${b.dataset.y} · ${t[0]}</b><br>${t[1]}. <i>${t[2]}</i>`; };
+const readBand = b => { const t = talks[b.dataset.y][+b.dataset.i]; bands.forEach(x => x.classList.toggle('on', x === b)); gelread.innerHTML = `<b style="font:700 1.05rem ${'"Times New Roman"'},serif;color:#d8361e">${b.dataset.y} · ${t[0]}</b><br>${t[1]}. <i>${t[2]}</i>`; };
 bands.forEach(b => { b.addEventListener('mouseenter', () => readBand(b)); b.addEventListener('focus', () => readBand(b)); b.addEventListener('click', () => readBand(b)); });
 function runGel() { bands.forEach(b => { b.style.transition = 'none'; b.style.top = '0'; }); requestAnimationFrame(() => requestAnimationFrame(() => bands.forEach((b, i) => { b.style.transition = still ? 'none' : `top ${1.4 + i * .08}s cubic-bezier(.2,.8,.2,1)`; b.style.top = getComputedStyle(b).getPropertyValue('--to'); }))); }
 // notebook clock
@@ -183,9 +196,8 @@ const C = {
   linkedin: () => { open('https://www.linkedin.com/in/ryanbarrs', '_blank'); return ['Opening LinkedIn.']; },
   scholar: () => { open('https://scholar.google.com/citations?user=jumDAcQAAAAJ&hl=en', '_blank'); return ['Opening Google Scholar.']; },
   github: () => { open('https://github.com/barrsr', '_blank'); return ['Opening GitHub.']; },
-  coffee: () => ['Black, no sugar. Fuel for long bench days.'],
   'sudo hire ryan': () => { setTimeout(() => location.href = `mailto:${mail}?subject=${encodeURIComponent('Hello Ryan')}`, 700); return ['Permission granted. Opening your email.']; },
-  ls: () => ['research/  writing/  talks/  now.txt  contact.txt'],
+  ls: () => ['research/  papers/  writing/  talks/  resume.pdf  now.txt  contact.txt'],
   exit: () => ['There is no exit. Only <mark>email</mark>.'],
 };
 const tlog = document.getElementById('tlog'), tcmd = document.getElementById('tcmd');
