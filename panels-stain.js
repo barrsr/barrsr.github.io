@@ -91,9 +91,9 @@ S.research = sheet('research', 'Research', '', `${rorder.map(c => `<div class="y
   <p class="s" style="margin-top:44px;color:var(--soft)">Every paper is on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
 S.papers = sheet('papers', 'Papers', '', `${papers.map(([g, list]) => `<div class="yr">${g}</div><ol class="paperlist">${list.map(x => `<li>${x}</li>`).join('')}</ol>`).join('')}
   <p class="s" style="margin-top:44px;color:var(--soft)">Citations and the full record are on <a href="https://scholar.google.com/citations?user=jumDAcQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>`);
-S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" href="files/ryan-barrs-resume.pdf" download>One-page resume</a><span class="meta">PDF</span></div>
-  <div class="dl"><a class="big" href="files/ryan-barrs-cv.pdf" download>Full CV</a><span class="meta">PDF</span></div>
-  <object class="preview" data="files/ryan-barrs-resume.pdf#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
+S.resume = sheet('resume', 'Resume and CV', '', `<div class="dl"><a class="big" href="files/ryan-barrs-resume.pdf?v=2" download>One-page resume</a><span class="meta">PDF</span></div>
+  <div class="dl"><a class="big" href="files/ryan-barrs-cv.pdf?v=2" download>Full CV</a><span class="meta">PDF</span></div>
+  <object class="preview" data="files/ryan-barrs-resume.pdf?v=2#view=FitH&amp;toolbar=0" type="application/pdf" aria-label="Resume preview"></object>`);
 S.writing = sheet('writing', 'Writing', 'Research stories I wrote for the Medical University of South Carolina newsroom.', `<ul class="items stories">${writing.map(w => item(`${w[0]}, ${w[1]}`, `<a href="${w[3]}" target="_blank" rel="noopener">${w[2]}</a>`)).join('')}</ul>`);
 S.talks = sheet('talks', 'Talks', '', `${talks.map(([y, list]) => `<div class="yr">${y}</div><ul class="items">${list.map(t => item(t[0], t[1], t[2])).join('')}</ul>`).join('')}
   <div class="yr honors">Honors</div><ul class="items">
